@@ -35,11 +35,15 @@ $(window).resize(function(){
 	annulusWidth = Math.min($(window).height(),$(window).width())/4;
 });
 
-$(window).mousemove(function(e){
-	if(!e)var e = window.event;
-	clientX = e.clientX;
-	clientY = e.clientY;
-})
+var mouseDown = 0;
+$(window).on('touchstart mousedown',function() {mouseDown = 1;});
+$(window).on('touchend touchcancel mouseup',function() {mouseDown = 0;});
+$(window).on('touchmove mousemove',function(e){
+	if(mouseDown){
+		clientX = e.clientX || e.originalEvent.touches[0].pageX;
+		clientY = e.clientY || e.originalEvent.touches[0].pageY;
+	}
+});
 
 setInterval(function(e){
 	if(clientX === null || clientY === null)return;
