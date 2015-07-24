@@ -23,7 +23,7 @@ io.on('connection', function(socket){
 	  console.log('disconnected');
   });
   socket.on('mousemove', function(point){
-	if(point.RSig < 1 && point.RSig > 0 && point.Th > 0 && point.Th < 2*Math.PI)
+	if(point.RSig <= 1 && point.RSig >= 0 && point.Th >= -Math.PI && point.Th <= Math.PI)
 		console.log(point);
   });
 });

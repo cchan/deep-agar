@@ -2,10 +2,16 @@
 
 var circ1 = Shape.Circle({center:view.center, radius:annulusInnerR + annulusWidth, fillColor:"black"});
 var circ2 = Shape.Circle({center:view.center, radius:annulusInnerR, fillColor:"white"});
-var layer = new Layer({
+var background = new Layer({
 	children:[circ1, circ2],
 	opacity:0.2
-})
+});
+function onResize(e){
+	circ1.position = view.center;
+	circ1.radius = annulusInnerR+annulusWidth;
+	circ2.position = view.center;
+	circ2.radius = annulusInnerR;
+}
 
 
 /*
