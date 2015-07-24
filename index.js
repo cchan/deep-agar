@@ -28,12 +28,13 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
 	  console.log('disconnected');
 	  
-	  for(var i = 0; i<players.size;i++)
-		  if(players[i].Username == socket.userdata.Username)
+	  for(var i = 0; i<players.length;i++){
+		  if(players[i].Username == socket.userdata.Username){
 			  players.splice(i,1);
-	  
-	  //"which player is this disconnection for"
-	  //delete players[io.sockets.indexOf(socket)];
+			  break;
+		  }
+	  }
+	  console.log(players);
   });
   socket.on('mousemove', function(data){
 	//if(data.RSig <= 1 && data.RSig >= 0 && data.Th >= -Math.PI && data.Th <= Math.PI){
@@ -41,7 +42,6 @@ io.on('connection', function(socket){
 	  for(var i = 0;i<players.length;i++)
 		  if(players[i].Username == data.Username)
 			  players[i] = data;
-	console.log(players);
 	//}
   });
   setInterval(function(){
