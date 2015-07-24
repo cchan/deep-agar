@@ -22,9 +22,10 @@ function onFrame(){
 	foreground.clear();
 	for(var i in players){
 		var color = 'red';
+		
 		if(players[i].Username == username)
 			color = 'green';
-		Shape.Circle({radius:30,center:new Point(players[i].x,players[i].y),fillColor:'red'});
+		Shape.Circle({radius:30,center:new Point(players[i].x,players[i].y),fillColor:color});
 		//--todo-- text centered in same place: players[i].Username
 	}
 }

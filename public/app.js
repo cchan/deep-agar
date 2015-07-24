@@ -60,7 +60,7 @@ setInterval(function(e){
 	//}
 	
 	updateData();
-},150);
+},20);
 
 function updateData(){//change pos based on received data
 	for(var i in players){
