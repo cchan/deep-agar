@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" ng-app="ChatApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+	<meta name="description" content="">
+	<meta name="copyright" content="">
+	
+	<title>DEEP 2015 - Agar</title>
+	
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+	
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="app.js"></script>
+	<script src="paper-full.min.js"></script>
+	<script type="text/paperscript" canvas="agar-canvas" src="paperjs-candy-crash.js"></script>
+</head>
+<body ng-controller="ChatController as chat">
+	<canvas id="agar-canvas" data-paper-resize="true"></canvas>
+</body>
+</html>

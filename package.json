@@ -1,0 +1,28 @@
+{
+  "name": "deep-agar",
+  "version": "0.0.0",
+  "description": "DEEP Summer 2015 project",
+  "main": "index.js",
+  "scripts": {
+	"prestart": "sass public/main.scss:public/style.css",
+    "start": "foreman start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cchan/deep-agar.git"
+  },
+  "keywords": [
+    "deep",
+    "agar"
+  ],
+  "author": "Clive Chan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cchan/deep-agar/issues"
+  },
+  "homepage": "https://github.com/cchan/deep-agar#readme",
+  "dependencies": {
+    "socket.io" : "latest",
+    "express": "latest"
+  }
+}
