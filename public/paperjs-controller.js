@@ -1,6 +1,6 @@
 
 
-var circ1 = Shape.Circle({center:view.center, radius:annulusInnerR + annulusWidth, fillColor:"black"});
+/*var circ1 = Shape.Circle({center:view.center, radius:annulusInnerR + annulusWidth, fillColor:"black"});
 var circ2 = Shape.Circle({center:view.center, radius:annulusInnerR, fillColor:"white"});
 var background = new Layer({
 	children:[circ1, circ2],
@@ -11,6 +11,22 @@ function onResize(e){
 	circ1.radius = annulusInnerR+annulusWidth;
 	circ2.position = view.center;
 	circ2.radius = annulusInnerR;
+}*/
+
+var foreground = new Layer({
+	opacity:1
+});
+//--todo-- layers??
+function onFrame(){
+	//--todo-- clear this layer
+	foreground.clear();
+	for(var i in players){
+		var color = 'red';
+		if(players[i].Username == username)
+			color = 'green';
+		Shape.Circle({radius:30,center:new Point(players[i].x,players[i].y),fillColor:'red'});
+		//--todo-- text centered in same place: players[i].Username
+	}
 }
 
 

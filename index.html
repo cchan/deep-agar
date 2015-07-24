@@ -19,9 +19,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="app.js"></script>
 	<script src="paper-full.min.js"></script>
-	<script type="text/paperscript" canvas="agar-canvas" src="paperjs-candy-crash.js"></script>
+	<script type="text/paperscript" canvas="agar-canvas" src="paperjs-controller.js"></script>
 </head>
 <body ng-controller="ChatController as chat">
-	<canvas id="agar-canvas" data-paper-resize="true"></canvas>
+	<canvas id="agar-canvas" data-paper-resize="true" data-paper-keepalive="true"></canvas>
 </body>
 </html>

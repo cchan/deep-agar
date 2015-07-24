@@ -14,17 +14,30 @@ app.get('/', function(req, res){
   res.sendFile('index.html', { root: __dirname });
 });
 
-
-
-//broadcast positions
+/*****Relay data packets*****/
+var players = [];
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.on('login', function(data){
+	  console.log('Added user:',data);
+	  io.sockets.emit('login', data);
+	  socket.userdata = data;
+	  players.push(data);
+	  //socket.emit('logininit',players); //only to this socket
+  });
   socket.on('disconnect', function(){
 	  console.log('disconnected');
+	 // delete players[io.sockets.indexOf(socket)];
   });
-  socket.on('mousemove', function(point){
-	if(point.RSig <= 1 && point.RSig >= 0 && point.Th >= -Math.PI && point.Th <= Math.PI)
-		console.log(point);
+  socket.on('mousemove', function(data){
+	//if(data.RSig <= 1 && data.RSig >= 0 && data.Th >= -Math.PI && data.Th <= Math.PI){
+	  //io.sockets.emit('update', data);
+	  for(var i = 0;i<players.length;i++)
+		  if(players[i].Username == data.Username)
+			  players[i] = data;
+	console.log(players);
+	  io.sockets.emit('playerdata',players);
+	//}
   });
 });
 
