@@ -26,7 +26,7 @@ io.on('connection', function(socket){
 	  //socket.emit('logininit',players); //only to this socket
   });
   socket.on('disconnect', function(){
-	  console.log('disconnected');
+	  console.log('Disconnected:',socket.userdata.Username);
 	  
 	  for(var i = 0; i<players.length;i++){
 		  if(players[i].Username == socket.userdata.Username){
@@ -46,7 +46,7 @@ io.on('connection', function(socket){
   });
   setInterval(function(){
 	  io.sockets.emit('playerdata',players);
-  },20);
+  },25);
 });
 
 

@@ -25,7 +25,15 @@ function onFrame(){
 		
 		if(players[i].Username == username)
 			color = 'green';
-		Shape.Circle({radius:30,center:new Point(players[i].x,players[i].y),fillColor:color});
+		
+		var point = new Point(players[i].x,players[i].y);
+		
+		Shape.Circle({radius:50,center:point,fillColor:color});
+		var text = new PointText(point);
+		text.justification = 'center';
+		text.fillColor = 'white';
+		text.content = players[i].Username.replace(' ','\n');
+		text.fontSize = '8pt';
 		//--todo-- text centered in same place: players[i].Username
 	}
 }

@@ -28,12 +28,12 @@ var sentRSig = 0, sentTh = 0;
 var clientX = 0, clientY = 0;
 
 //Within the annulus, stopped. On the annulus, moves. Outside of annulus, max speed.
-var annulusInnerR = Math.min($(window).height(),$(window).width())/8;
+/*var annulusInnerR = Math.min($(window).height(),$(window).width())/8;
 var annulusWidth = Math.min($(window).height(),$(window).width())/4;
 $(window).resize(function(){
 	annulusInnerR = Math.min($(window).height(),$(window).width())/8;
 	annulusWidth = Math.min($(window).height(),$(window).width())/4;
-});
+});*/
 
 var mouseDown = 0;
 $(window).on('touchstart mousedown',function() {mouseDown = 1;});
@@ -48,14 +48,14 @@ $(window).on('touchmove mousemove',function(e){
 setInterval(function(e){
 	if(clientX === null || clientY === null)return;
 	
-	var XCtr = parseInt(clientX) - $(window).width() / 2;
+	/*var XCtr = parseInt(clientX) - $(window).width() / 2;
 	var YCtr = parseInt(clientY) - $(window).height() / 2;
 	
 	mouseRSig = sigmoidFunction(Math.sqrt(XCtr * XCtr + YCtr * YCtr));
 	mouseTh = Math.atan2(YCtr, XCtr);
 	
 	var dRSig = sentRSig - mouseRSig,
-		dTh = sentTh - mouseTh;
+		dTh = sentTh - mouseTh;*/
 	
 	//if(Math.abs(dRSig) > 0.1 || Math.abs(dTh) > 0.1 /*about 6 degrees*/){
 		socket.emit('mousemove', {Username: username, /*RSig:mouseRSig, Th:mouseTh, */x:clientX, y:clientY}); //lol what is security
@@ -63,22 +63,22 @@ setInterval(function(e){
 		sentTh = mouseTh;
 	//}
 	
-	updateData();
-},20);
+	//updateData();
+},25);
 
-function updateData(){//change pos based on received data
+/*function updateData(){//change pos based on received data
 	for(var i in players){
-		//players[i].Pos.x += 10*players[i].RSig*Math.cos(players[i].Th);
-		//players[i].Pos.x = normalize(players[i].Pos.x,0,$(window).width());
-		//players[i].Pos.y += 10*players[i].RSig*Math.sin(players[i].Th);
-		//players[i].Pos.y = normalize(players[i].Pos.y,0,$(window).height());
+		players[i].Pos.x += 10*players[i].RSig*Math.cos(players[i].Th);
+		players[i].Pos.x = normalize(players[i].Pos.x,0,$(window).width());
+		players[i].Pos.y += 10*players[i].RSig*Math.sin(players[i].Th);
+		players[i].Pos.y = normalize(players[i].Pos.y,0,$(window).height());
 	}
 }
 function normalize(a,low,high){
 	if(a<low)return low;
 	if(a>high)return high;
 	return a;
-}
+}*/
 
 function sigmoidFunction(x){
 	return 1/(1+Math.exp(-((x-annulusInnerR-annulusWidth/2)/(annulusWidth/2/4))));
