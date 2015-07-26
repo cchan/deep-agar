@@ -38,12 +38,21 @@ $(window).resize(function(){
 var mouseDown = 0;
 $(window).on('touchstart mousedown',function() {mouseDown = 1;});
 $(window).on('touchend touchcancel mouseup',function() {mouseDown = 0;});
-$(window).on('touchmove mousemove',function(e){
+$(window).on('mousemove',function(e){
 	if(mouseDown){
 		clientX = e.clientX || e.originalEvent.touches[0].pageX;
 		clientY = e.clientY || e.originalEvent.touches[0].pageY;
 	}
 });
+$(window).on('touchmove',function(e){
+	if(mouseDown){
+		clientX = e.clientX || e.originalEvent.touches[0].pageX;
+		clientY = e.clientY || e.originalEvent.touches[0].pageY;
+	}
+	e.preventDefault();
+	return false;
+});
+
 
 setInterval(function(e){
 	if(clientX === null || clientY === null)return;
