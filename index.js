@@ -32,7 +32,7 @@ io.on('connection', function(socket){
 			console.log("ERROR: Posupdate name doesn't match socket");
 			return;
 		}
-		if(clientX === null || clientY === null)
+		if(data.x === null || data.y === null)
 			return;
 		socket.userdata.x = data.x;
 		socket.userdata.y = data.y;
@@ -42,9 +42,14 @@ io.on('connection', function(socket){
 /*****Periodically broadcast all data*****/
 setInterval(function(){
 	var players = [];
-	io.sockets.clients().forEach(function (socket) {
-		if(socket.userdata)
-			players.push(socket.userdata);
-	});
+	var ns = io.of('/');
+	
+	for(var sid in ns.connected)
+		if(ns.connected[sid].userdata)
+			players.push(ns.connected[sid].userdata);
+	//woah
+	//https://stackoverflow.com/questions/3520688/javascript-loop-performance-why-is-to-decrement-the-iterator-toward-0-faster-t
+	//http://www.impressivewebs.com/javascript-for-loop/
+	
 	io.sockets.emit('playerdata',players); //this emits to all; socket.emit emits only to current socket (see - function(socket) at the top); socket.broadcast.emit does to everyone except current
 },50);

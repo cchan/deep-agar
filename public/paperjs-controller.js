@@ -1,23 +1,25 @@
 //On each frame, draws a circle and text for each player
 function onFrame(){
 	project.activeLayer.removeChildren(); //clear the layer - hm layers are actually really powerful
+	
+	//--todo--store previous players[] and make fading trails :)
 	for(var i in players){
-		var point = new Point(players[i].x,players[i].y);
+		var pt = new Point(players[i].x, players[i].y);
 		var color = 'red';
 		
 		if(players[i].Username == username){
-			point = new Point(mouseX, mouseY);
+			pt = new Point(mouseX, mouseY); //Our own one should follow without lag
 			color = 'green';
 		}
 		
 		Shape.Circle({
-			center: point,
+			center: pt,
 			radius: 50,
 			fillColor: color //it's green if it's yours
 		});
 		
-		PointText({
-			center: point,
+		new PointText({
+			point: pt,
 			content: players[i].Username.replace(' ','\n'),
 			justification: 'center',
 			fillColor: 'white',
