@@ -46,7 +46,7 @@ io.on('connection', function(socket){
   });
   setInterval(function(){
 	  io.sockets.emit('playerdata',players);
-  },25);
+  },50);
 });
 
 
