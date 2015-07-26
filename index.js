@@ -3,50 +3,48 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-/*****Get the server up*****/
-http.listen(process.env.PORT || 3000, function(){ //Heroku dynamically assigns port http://stackoverflow.com/a/15693371
+/*****Get the server up and listening*****/
+http.listen(process.env.PORT || 3000, function(){ //Heroku dynamically assigns port: http://stackoverflow.com/a/15693371
   console.log('listening on *:' + (process.env.PORT || 3000));
 });
 
 /*****Figure out what to serve*****/
-app.use(express.static('public'));
+app.use(express.static('public')); //serves stuff in /public as if it's in the main directory
 app.get('/', function(req, res){
-  res.sendFile('index.html', { root: __dirname });
+	//can log a pageload here
+	res.sendFile('index.html', { root: __dirname });
 });
 
-/*****Relay data packets*****/
-var players = [];
+/*****Data-relaying*****/
 io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('login', function(data){
-	  console.log('Added user:',data);
-	  io.sockets.emit('login', data);
-	  socket.userdata = data;
-	  players.push(data);
-	  //socket.emit('logininit',players); //only to this socket
-  });
-  socket.on('disconnect', function(){
-	  console.log('Disconnected:',socket.userdata.Username);
-	  
-	  for(var i = 0; i<players.length;i++){
-		  if(players[i].Username == socket.userdata.Username){
-			  players.splice(i,1);
-			  break;
-		  }
-	  }
-	  console.log(players);
-  });
-  socket.on('mousemove', function(data){
-	//if(data.RSig <= 1 && data.RSig >= 0 && data.Th >= -Math.PI && data.Th <= Math.PI){
-	  //io.sockets.emit('update', data);
-	  for(var i = 0;i<players.length;i++)
-		  if(players[i].Username == data.Username)
-			  players[i] = data;
-	//}
-  });
-  setInterval(function(){
-	  io.sockets.emit('playerdata',players);
-  },50);
+	/*****Handle connects and disconnects*****/
+	socket.on('login', function(data){
+		socket.userdata = data;
+		console.log('Added user:', socket.userdata.Username);
+	});
+	socket.on('disconnect', function(){ //Usefully, sockets are removed as they disconnect, so I don't have to manually search players[] for the username to remove.
+		console.log('Disconnected:', socket.userdata.Username);
+	});
+	
+	/*****Collect sent data*****/
+	socket.on('posupdate', function(data){
+		if(socket.userdata.Username != data.Username){
+			console.log("ERROR: Posupdate name doesn't match socket");
+			return;
+		}
+		if(clientX === null || clientY === null)
+			return;
+		socket.userdata.x = data.x;
+		socket.userdata.y = data.y;
+	});
 });
 
-
+/*****Periodically broadcast all data*****/
+setInterval(function(){
+	var players = [];
+	io.sockets.clients().forEach(function (socket) {
+		if(socket.userdata)
+			players.push(socket.userdata);
+	});
+	io.sockets.emit('playerdata',players); //this emits to all; socket.emit emits only to current socket (see - function(socket) at the top); socket.broadcast.emit does to everyone except current
+},50);
